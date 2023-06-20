@@ -4,12 +4,48 @@
   <title>Basic Tetris HTML Game</title>
   <meta charset="UTF-8">
 
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/806/806099.png" type="image/x-icon">
   <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 
  
 
 </head>
+
 <body>
+
+  <!--Botões-->
+
+  <div class="button-container">
+    <div class="button">
+      <button class="icon-button" onclick="pauseGame()">
+        <i id="pause-icon" class="bi bi-pause-fill"></i>
+      </button>
+  
+      <button class="icon-button" onclick="toggleAudio()">
+        <i id="volume-icon" class="bi bi-volume-mute"></i>
+      </button>
+    </div>
+  </div>
+  
+  <!--Audio-->
+
+  <audio id="myAudio" loop>
+    <source src="music/Original Tetris theme (Tetris Soundtrack).mp3" type="audio/mpeg">
+    Seu navegador não suporta o elemento de áudio.
+  </audio>
+
+  <!--Funções Na Tela-->
+
+  <div id="gameStart" class="start-game" onclick="startGame()"><h1>START GAME</h1></div>
+
+  <div id="gamePause" class="pause-game" onclick="pauseGame()"><h1>GAME PAUSED</h1></div>
+
+  <div id="gameOver" class="over-game" onclick="restartGame()"><h1>GAME OVER!</h1></div>
+
 <canvas width="320" height="640" id="game"></canvas>
 
 <span class="score"><span class="resultado"></span></span>

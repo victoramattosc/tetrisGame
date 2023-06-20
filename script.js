@@ -4,6 +4,19 @@ function getRandomInt(min, max) {
   
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+
+  function toggleAudio() {
+    var audio = document.getElementById("myAudio");
+    var volumeIcon = document.getElementById("volume-icon");
+  
+    if (audio.paused) {
+      audio.play();
+      volumeIcon.className = "bi bi-volume-up-fill";
+    } else {
+      audio.pause();
+      volumeIcon.className = "bi bi-volume-mute";
+    }
+  }
   
   // generate a new tetromino sequence
   // @see https://tetris.fandom.com/wiki/Random_Generator
@@ -74,7 +87,7 @@ function getRandomInt(min, max) {
   }
   const score = document.querySelector(".score")
   var pont = 0;
-  score.innerHTML = `Score: ${pont}`
+  score.innerHTML = `Score:${pont}`
 
   // place the tetromino on the playfield
   function placeTetromino() {
@@ -84,7 +97,7 @@ function getRandomInt(min, max) {
   
           // game over if piece has any part offscreen
           if (tetromino.row + row < 0) {
-            return showGameOver();
+            return overGame();
           }
   
           playfield[tetromino.row + row][tetromino.col + col] = tetromino.name;
@@ -114,23 +127,53 @@ function getRandomInt(min, max) {
     tetromino = getNextTetromino();
   }
 
-  
-  // show the game over screen
-  function showGameOver() {
-    cancelAnimationFrame(rAF);
-    gameOver = true;
-  
-    context.fillStyle = 'black';
-    context.globalAlpha = 0.75;
-    context.fillRect(0, canvas.height / 2 - 30, canvas.width, 60);
-  
-    context.globalAlpha = 1;
-    context.fillStyle = 'red';
-    context.font = '36px monospace';
-    context.textAlign = 'center';
-    context.textBaseline = 'middle';
-    context.fillText('GAME OVER!', canvas.width / 2, canvas.height / 2);
+  var gameOver = false;
+  var gameStart = false;
+
+  function startGame(){
+    gameStart = true;
+      rAF = requestAnimationFrame(loop);
+
+      const startGameButton = document.getElementById('gameStart');
+      startGameButton.style.display = 'none';
   }
+
+  // show the game over screen
+  function overGame() {
+    gameOver = true;
+    cancelAnimationFrame(rAF);
+
+    const gameOverText = document.getElementById('gameOver');
+    gameOverText.style.display = 'block';
+    
+  }
+
+  function restartGame() {
+ // Reverta todas as alterações no jogo e redefina as variáveis
+
+  // Reinicie as variáveis para os valores iniciais
+  gameOver = false;
+  pont = 0;
+
+  // Limpe o campo de jogo
+  for (let row = -2; row < 20; row++) {
+    for (let col = 0; col < 10; col++) {
+      playfield[row][col] = 0;
+    }
+  }
+
+  // Reinicie a sequência de tetrominos
+  tetrominoSequence.length = 0;
+
+  // Oculte o texto de "Game Over"
+  const gameOverText = document.getElementById('gameOver');
+  gameOverText.style.display = 'none';
+
+  // Reinicie o jogo chamando a função de inicialização do jogo novamente
+  startGame();
+  }
+
+
   
   
   const canvas = document.getElementById('game');
@@ -204,7 +247,8 @@ function getRandomInt(min, max) {
   let count = 0;
   let tetromino = getNextTetromino();
   let rAF = null;  // keep track of the animation frame so we can cancel it
-  let gameOver = false;
+
+
   
   // game loop
   function loop() {
@@ -253,31 +297,45 @@ function getRandomInt(min, max) {
     }
   }
 
-  var isPaused = false;
+
+  isPaused = false;
+
+  function pauseGame() {
+    if (!gameStart) {
+      return; // Se o jogo não foi iniciado, sai da função sem fazer nada
+    }
+    if (gameOver){
+      return; // Se perder o jogo sai da função sem fazer nada
+    }
+    
+  
+    var pauseIcon = document.getElementById("pause-icon");
+    const gamePausedText = document.getElementById('gamePause');
+  
+    if (!isPaused) {
+      cancelAnimationFrame(rAF);
+      gamePausedText.style.display = 'block';
+      pauseIcon.className = "bi bi-play-fill"; // Atualiza o ícone para o ícone de play
+    } else {
+      rAF = requestAnimationFrame(loop);
+      gamePausedText.style.display = 'none'; // Oculta o texto "Game Paused!"
+      pauseIcon.className = "bi bi-pause-fill"; // Atualiza o ícone para o ícone de pausa
+      console.log('Jogo despausado!');
+    }
+  
+    isPaused = !isPaused;
+  }
   
   // listen to keyboard events to move the active tetromino and pause the game
-  document.addEventListener('keydown', function(e) {
+  document.addEventListener('keydown', function (e) {
     if (gameOver) return;
-
+  
     if (e.keyCode === 32) {
-        if (isPaused) {
-            rAF = requestAnimationFrame(loop);
-          console.log('Jogo despausado!');
-        } else {
-            cancelAnimationFrame(rAF);
-            context.globalAlpha = 1;
-            context.fillStyle = 'white';
-            context.font = '36px monospace';
-            context.textAlign = 'center';
-            context.textBaseline = 'middle';
-            context.fillText('Game Paused!', canvas.width / 2, canvas.height / 2);
-          console.log('Jogo pausado!');
-        }
-        
-        isPaused = !isPaused;
-      }
+      e.preventDefault();
+      pauseGame();
+    }
 
-      if(isPaused === false){
+      else{
   
     // left and right arrow keys (move)
     if (e.which === 37 || e.which === 39) {
@@ -314,6 +372,4 @@ function getRandomInt(min, max) {
   }});
 
 
-  // start the game
-  rAF = requestAnimationFrame(loop);
 

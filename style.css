@@ -1,6 +1,7 @@
 html, body {
     height: 100%;
     margin: 0;
+    font-family: 'Press Start 2P', cursive;
   }
 
   body {
@@ -19,5 +20,91 @@ html, body {
     top: 30px;
     right:10px;
     font-size:xx-large;
+    font-size: 15px;
     color: white;
+}
+
+.start-game{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  cursor: pointer;
+  color: white;
+  background-color: #950707;
+  border-radius: 5px;
+  padding: 20px;
+  font-size: 20px;
+  transition: all 0.3s ease;
+}
+
+.pause-game{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  cursor: pointer;
+  color: white;
+  background-color: #495eb3;
+  border-radius: 5px;
+  padding: 20px;
+  font-size: 20px;
+  transition: all 0.3s ease;
+  display: none;
+}
+
+.pause-game:hover{
+  font-size: 25px;
+  border-radius: 0px;
+}
+
+.over-game{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  cursor: pointer;
+  color:#950707;
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
+  font-size: 20px;
+  transition: all 0.3s ease;
+  display: none;
+}
+
+.over-game:hover{
+  font-size: 25px;
+  border-radius: 0px;
+}
+
+.start-game:hover{
+    font-size: 25px;
+    border-radius: 0px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+}
+
+.button {
+  display: flex;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+
+.icon-button i {
+  font-size: 24px; /* Ajuste o tamanho do ícone conforme necessário */
+  color: white; /* Ajuste a cor do ícone conforme necessário */
 }
