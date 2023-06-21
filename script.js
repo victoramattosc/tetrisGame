@@ -308,7 +308,6 @@ function getRandomInt(min, max) {
       return; // Se perder o jogo sai da função sem fazer nada
     }
     
-  
     var pauseIcon = document.getElementById("pause-icon");
     const gamePausedText = document.getElementById('gamePause');
   

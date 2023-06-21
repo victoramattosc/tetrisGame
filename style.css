@@ -38,7 +38,7 @@ html, body {
   transition: all 0.3s ease;
 }
 
-.pause-game{
+.pause-game {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -53,8 +53,30 @@ html, body {
   display: none;
 }
 
-.pause-game:hover{
+.pause-game:hover {
   font-size: 25px;
+  border-radius: 0px;
+}
+
+.reset-game {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 160px; /* Ajuste a posição vertical conforme necessário */
+  cursor: pointer;
+  color: white;
+  background-color: #f8e533;
+  border-radius: 5px;
+  font-size: 10px;
+  padding: 10px;
+  transition: all 0.3s ease;
+  display: none;
+}
+
+
+.reset-game:hover{
+  font-size: 12px;
   border-radius: 0px;
 }
 
