@@ -63,7 +63,7 @@ html, body {
   justify-content: center;
   align-items: center;
   position: absolute;
-  bottom: 160px; /* Ajuste a posição vertical conforme necessário */
+  bottom: 17.5vw; /* Ajuste a posição vertical conforme necessário */
   cursor: pointer;
   color: white;
   background-color: #f8e533;
